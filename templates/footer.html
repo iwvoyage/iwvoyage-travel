@@ -1,0 +1,145 @@
+
+{% load static %}
+
+<style>
+
+.site-footer {
+  background: rgb(44, 51, 72);
+  font-size: 14px;
+  padding: 70px 0;
+  color: white; }
+  .site-footer a {
+    color: rgba(255, 255, 255, 0.5);
+    position: relative;
+    display: inline-block; }
+    .site-footer a:hover {
+      color: #fff; }
+  .site-footer .footer-cta h2, .site-footer .footer-cta .h2 {
+    font-size: 30px;
+    color: #fff; }
+
+
+  .site-footer .btn:before {
+    display: none; }
+
+
+  .site-footer .widget {
+    margin-bottom: 40px;
+    display: block; }
+    .site-footer .widget h3, .site-footer .widget .h3 {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .1rem;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+      color: #fff; }
+    .site-footer .widget .links {
+      width: 150px; }
+      .site-footer .widget .links li {
+        margin-bottom: 10px; }
+
+
+  .site-footer .social li {
+    display: inline-block; }
+
+    
+    .site-footer .social li a {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      position: relative;
+      background: #fff;
+      border-radius: 4px;
+      color: #214252 !important;
+    }
+
+.site-footer .social li a span::before {
+  color: #214252 !important;         /* Make the icon grey */
+  background-color: transparent;  /* No background on icon itself */
+  font-size: 22px;                /* Optional: size tuning */
+  z-index: 10;
+}
+
+
+ .site-footer .social li a > span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%); 
+        color: #214252 !important;
+    
+    }
+
+      .site-footer .social li a:hover {
+        background: rgba(255, 255, 255, 0.1); /* subtle hover bg */
+        color: #214252 !important;
+      }
+
+
+</style>
+
+<footer class="site-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="widget">
+                    <h3 class="mb-4">Our Mission</h3>
+
+                    <p>iwVoyage is dedicated to creating unforgettable journeys and crafting remarkable travel experiences around
+          the globe. With our extensive knowledge, personalized service, and passion for exploration, we are your
+           trusted partner in turning your travel dreams into reality.</p>
+                </div> <!-- /.widget -->
+                <div class="widget">
+                    <h3>Social</h3>
+                    <ul class="list-unstyled social">
+                        <li ><a href="https://www.instagram.com/iwvoyage/"><span class="bi bi-instagram"></span></a></li>
+                        <li><a href="https://www.facebook.com/iwvoyagetravel/"><span class="bi bi-facebook"></span></a></li>
+                        <li><a href="https://www.linkedin.com/in/iwvoyage-travel-5704b6283/"><span class="bi bi-linkedin"></span></a></li>
+                        <li><a href="https://www.youtube.com/@iwVoyage/"><span class="bi bi-youtube"></span></a></li>
+               
+                    </ul>
+                </div> <!-- /.widget -->
+            </div> <!-- /.col-lg-4 -->
+            <div class="col-lg-6 ps-lg-6">
+                <div class="widget">
+                    <h3 class="mb-4">Company</h3>
+                    <ul class="list-unstyled float-start links">
+                        <li><a href="{% url 'contact:contact_page' %}">About us</a></li>
+                        <li><a href="{% url 'partners:partner_list' %}">Partners</a></li>
+                        <li><a href="{% url 'post:post_list' %}">Posts</a></li>
+                        <li><a href="{% url 'qna:question_list' %}">Q&A</a></li>
+                        <li><a href="{% url 'contact:contact_page' %}">Contact</a></li>
+                    </ul>
+                    <ul class="list-unstyled float-start links">
+                        <li><a href="#">Service</a></li>
+                        <li><a href="#">Philippines</a></li>
+                        <li><a href="#">Japan</a></li>
+                        <li><a href="#">Booking Form</a></li>
+
+                    </ul>
+                </div> <!-- /.widget -->
+            </div> <!-- /.col-lg-4 -->
+
+
+                </div> <!-- /.widget -->
+            </div> <!-- /.col-lg-4 -->
+        </div> <!-- /.row -->
+
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+      <!--
+          **==========
+          NOTE:
+          Please don't remove this copyright link unless you buy the license here https://untree.co/license/
+          **==========
+        -->
+
+        <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://iwvoyage.com">iwVoyage</a>  Distributed by <a href="https://iwvoyage.com">iwVoyage.com</a> <!-- License information: https://untree.co/license/ -->
+        </p>
+      </div>
+    </div>
+  </div> <!-- /.container -->
+</footer> <!-- /.site-footer -->
+

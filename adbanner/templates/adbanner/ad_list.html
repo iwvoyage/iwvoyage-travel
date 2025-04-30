@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container my-5">
+    <h2>All Ads</h2>
+    <div class="row">
+      {% for banner in banners %}
+        <div class="col-md-4 mb-4 text-center">
+          <a href="{{ banner.link }}" target="_blank">
+            <img src="{{ banner.image.url }}" class="img-fluid" alt="{{ banner.title }}">
+            <h5 class="mt-2">{{ banner.title }}</h5>
+          </a>
+        </div>
+      {% empty %}
+        <p>No ads to show.</p>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

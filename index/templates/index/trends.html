@@ -1,0 +1,28 @@
+{% load static %}
+{% if trends %}
+<section class="section posts-entry">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-sm-6">
+        <h2 class="posts-entry-title">Trending Hotels and Resorts of 2025</h2>
+      </div>
+    </div>
+
+    <div class="row g-3">
+      {% for trend in trends %}
+      <div class="col-md-4">
+        <div class="blog-entry">
+          <a href="{{ trend.link }}" class="img-link">
+            <img src="{{ trend.image.url }}" alt="{{ trend.title }}" class="img-fluid">
+          </a>
+          <span class="date">{{ trend.location }}</span>
+          <h2><a href="{{ trend.link }}">{{ trend.title }}</a></h2>
+          <p>{{ trend.description|truncatechars:160 }}</p>
+          <p><a href="{{ trend.link }}" class="btn btn-sm btn-outline-primary">Read More</a></p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}

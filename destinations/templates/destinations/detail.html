@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+  .site-cover {
+    background-image: url('{{ destination.hero.url }}');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .site-cover.overlay::before {
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+
+  .tag-container {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag-box {
+    display: inline-block;
+    padding: 0.4rem 0.75rem;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .tag-box:hover {
+    background-color: #3fd0d4;
+    color: white;
+    border-color: #3fd0d4;
+  }
+
+  .fadeIn {
+    animation: fadeIn 1s ease-in-out both;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<div class="site-cover site-cover-sm same-height overlay single-page fadeIn">
+  <div class="container">
+    <div class="row same-height justify-content-center">
+      <div class="col-md-6">
+        <div class="post-entry text-center">
+          <h1 class="mb-4" style="margin-top: 20%; font-size: 80px;">{{ destination }}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include 'menu.html' %}
+
+<section class="section fadeIn">
+  <div class="container">
+    <div class="row blog-entries element-animate">
+
+      <div class="col-md-12 col-lg-8 main-content fadeIn">
+        <div class="post-content-body">
+          <h2 class="fadeIn">{{ destination.header|safe }}</h2>
+          <p class="fadeIn">{{ destination.body|safe }}</p>
+
+          <h3 class="fadeIn">{{ destination.subheader|safe }}</h3>
+          <p class="fadeIn">{{ destination.description|safe }}</p>
+
+          <hr style="margin-top: 50px;" class="fadeIn">
+
+          <div class="row my-4 fadeIn">
+            {% if destination.image_banner %}
+              <div class="col-md-12 mb-4">
+                <img src="{{ destination.image_banner.url }}" alt="image_banner" class="img-fluid rounded fadeIn">
+              </div>
+            {% endif %}
+            {% if destination.image2 %}
+              <div class="col-md-6 mb-4">
+                <img src="{{ destination.image2.url }}" alt="Image 2" class="img-fluid rounded fadeIn">
+              </div>
+            {% endif %}
+            {% if destination.image3 %}
+              <div class="col-md-6 mb-4">
+                <img src="{{ destination.image3.url }}" alt="Image 3" class="img-fluid rounded fadeIn">
+              </div>
+            {% endif %}
+          </div>
+
+          <h3 class="fadeIn">{{ destination.subheader_one|safe }}</h3>
+          <p class="fadeIn">{{ destination.description_one|safe }}</p>
+
+          <h3 class="fadeIn">{{ destination.subheader_two|safe }}</h3>
+          <p class="fadeIn">{{ destination.description_two|safe }}</p>
+
+          <div class="row my-4">
+            {% if destination.image4 %}
+              <div class="col-md-6 mb-4 fadeIn">
+                <img src="{{ destination.image4.url }}" alt="Image 4" class="img-fluid rounded">
+              </div>
+            {% endif %}
+            {% if destination.image5 %}
+              <div class="col-md-6 mb-4 fadeIn">
+                <img src="{{ destination.image5.url }}" alt="Image 5" class="img-fluid rounded">
+              </div>
+            {% endif %}
+          </div>
+          
+
+          <h3 class="fadeIn">{{ destination.subheader_three|safe }}</h3>
+          <p class="fadeIn">{{ destination.description_three|safe }}</p>
+
+          
+
+          <hr style="margin-top: 70px;" class="fadeIn">
+          <div class="pt-5 comment-wrap fadeIn"></div>
+          <div class="pt-2 fadeIn"></div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="col-lg-4 sidebar fadeIn">
+        <div class="sidebar-box search-form-wrap mb-4 fadeIn"></div>
+
+        {% if destination.cities.all %}
+        <div class="sidebar-box fadeIn">
+          <h3 class="heading">Explore Cities {{ name.name }}</h3>
+          <ul>
+            {% for city in destination.cities.all %}
+              <li><a href="{% url 'cities:city_detail' destination.slug city.slug %}">{{ city.name }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
+        <div class="sidebar-box fadeIn">
+          <h3 class="heading">What's Trending</h3>
+          <div class="post-entry-sidebar">
+            <ul>
+              {% for trend in trends %}
+              <li>
+                <a href="{{ trend.link }}">
+                  <img src="{{ trend.image.url }}" class="me-4 rounded" alt="{{ trend.title }}">
+                  <div class="text">
+                    <h4>{{ trend.title|truncatechars:50 }}</h4>
+                    <div class="post-meta"><span class="mr-2">{{ trend.location }}</span></div>
+                  </div>
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+
+        <div class="sidebar-box fadeIn">
+          <h3 class="heading">Sponsored</h3>
+          {% for banner in banners %}
+            <div class="mb-3 text-center">
+              <a href="{{ banner.link }}" target="_blank">
+                <img src="{{ banner.image.url }}" class="img-fluid mb-1" alt="{{ banner.title }}">
+                <p class="small text-muted" style="font-size: 18px; margin-top: 15px;">{{ banner.title }}</p>
+              </a>
+              <a href="{{ banner.link }}" class="btn btn-outline-head" style="margin-top: 15px;">Book Tour</a>
+            </div>
+          {% empty %}
+            <p>No ads available.</p>
+          {% endfor %}
+        </div>
+
+        <div class="sidebar-box fadeIn">
+          <h3 class="heading">Categories</h3>
+          <ul class="categories">
+            {% for category in categories %}
+              <li>
+                <a href="{% url 'post:posts_by_category' category.slug %}">
+                  {{ category.name }} ({{ category.post_set.count }})
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="sidebar-box fadeIn">
+          <h3 class="heading">Tags</h3>
+          <div class="tag-container">
+            {% for tag in tags %}
+              <a href="{% url 'post:posts_by_tag' tag.slug %}" class="tag-box">{{ tag.name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+      <!-- END SIDEBAR -->
+
+    </div>
+  </div>
+</section>
+{% endblock %}

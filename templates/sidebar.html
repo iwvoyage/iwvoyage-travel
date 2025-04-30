@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+  .site-cover {
+    background-image: url('{{ post.image_hero.url }}');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
+  .site-cover.overlay:before {
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+
+  .tag-container {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag-box {
+    display: inline-block;
+    padding: 0.4rem 0.75rem;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .tag-box:hover {
+    background-color: #3fd0d4;
+    color: white;
+    border-color: #3fd0d4;
+  }
+</style>
+<!-- Categories -->
+<div class="sidebar-box">
+  <h3 class="heading">Categories</h3>
+  <ul class="categories">
+    {% for category in categories %}
+      <li>
+        <a href="{% url category_url_name category.slug %}">
+          {{ category.name }} ({{ category.item_count }})
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<!-- Tags -->
+<div class="sidebar-box">
+  <h3 class="heading">Tags</h3>
+  <div class="tag-container">
+    {% for tag in tags %}
+      <a href="{% url tag_url_name tag.slug %}" class="tag-box">
+        {{ tag.name }} ({{ tag.item_count }})
+      </a>
+    {% endfor %}
+  </div>
+</div>
+<p>CATEGORIES: {{ categories|length }}</p>
+<p>TAGS: {{ tags|length }}</p>
+{% endblock %}

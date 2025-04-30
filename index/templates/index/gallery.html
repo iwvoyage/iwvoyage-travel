@@ -1,0 +1,215 @@
+{% load static %}
+<style>
+  .portfolio-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.portfolio-item .portfolio-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  transform: translateY(100%);
+  background: rgba(255, 255, 255, 0.95);
+  transition: all 0.3s ease;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.portfolio-item:hover .portfolio-info {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+  .portfolio-item img {
+    width: 100%;
+    border-radius: 10px;
+    display: block;
+  }
+
+  .portfolio-info {
+    padding: 15px;
+    background: #fff;
+    margin-top: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  .portfolio-info h4 {
+    margin-bottom: 5px;
+  }
+
+  .portfolio-info p {
+    margin-bottom: 0;
+  }
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=star" />
+<section id="portfolio" class="portfolio">
+  <div class="container">
+    {% if gallery %}
+    <div class="row">
+      <div class="section-title text-center">
+        <h2 style="margin-top: 60px;">{{ gallery.section_title }}</h2>
+      </div>
+
+      <div class="col-lg-12 d-flex justify-content-center" style="margin-top: 30px;">
+        <ul id="portfolio-flters">
+          <li data-filter="*" class="filter-active">All</li>
+          <li data-filter=".filter-app">Cities</li>
+          <li data-filter=".filter-card">Hotels</li>
+          <li data-filter=".filter-web">Tours</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row portfolio-container">
+
+      <!-- START: Repeat this 12 times with different filters -->
+      <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+        <a href="{{ gallery.page_link_1 }}">
+          <img src="{{ gallery.image_1.url }}" alt="">
+          <div class="portfolio-info">
+            <h4>{{ gallery.title_1 }}</h4>
+            <div class="card-poppins-text">{{ gallery.location_1 }}</div>
+            <span class="material-symbols-outlined mt-2">
+              starstarstarstar
+              </span>
+            <p class="card-poppins-text">From: ${{ gallery.price_1 }}</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+        <a href="{{ gallery.page_link_2 }}">
+          <img src="{{ gallery.image_2.url }}" alt="">
+          <div class="portfolio-info">
+            <h4>{{ gallery.title_2 }}</h4>
+            <div>{{ gallery.location_2 }}</div>
+            <span class="material-symbols-outlined mt-2">{{ gallery.stars_2 }}</span>
+            <p>From: ${{ gallery.price_2 }}</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+        <a href="{{ gallery.page_link_3 }}">
+          <img src="{{ gallery.image_3.url }}" alt="">
+          <div class="portfolio-info">
+            <h4>{{ gallery.title_3 }}</h4>
+            <div>{{ gallery.location_3 }}</div>
+            <span class="material-symbols-outlined mt-2">{{ gallery.stars_3 }}</span>
+            <p>From: ${{ gallery.price_3 }}</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- 👇 Keep going manually until image_12 -->
+      <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+        <a href="{{ gallery.page_link_4 }}">
+          <img src="{{ gallery.image_4.url }}" alt="">
+          <div class="portfolio-info">
+            <h4>{{ gallery.title_4 }}</h4>
+            <div>{{ gallery.location_4 }}</div>
+            <span class="material-symbols-outlined mt-2">{{ gallery.stars_4 }}</span>
+            <p>From: ${{ gallery.price_4 }}</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+        <a href="{{ gallery.page_link_5 }}">
+          <img src="{{ gallery.image_5.url }}" alt="">
+          <div class="portfolio-info">
+            <h4>{{ gallery.title_5 }}</h4>
+            <div>{{ gallery.location_5 }}</div>
+            <span class="material-symbols-outlined mt-2">{{ gallery.stars_5 }}</span>
+            <p>From: ${{ gallery.price_5 }}</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+        <a href="{{ gallery.page_link_6 }}">
+          <img src="{{ gallery.image_6.url }}" alt="">
+          <div class="portfolio-info">
+            <h4>{{ gallery.title_6 }}</h4>
+            <div>{{ gallery.location_6 }}</div>
+            <span class="material-symbols-outlined mt-2">{{ gallery.stars_6 }}</span>
+            <p>From: ${{ gallery.price_6 }}</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+        <a href="{{ gallery.page_link_7 }}">
+          <img src="{{ gallery.image_7.url }}" alt="">
+          <div class="portfolio-info">
+            <h4>{{ gallery.title_7 }}</h4>
+            <div>{{ gallery.location_7 }}</div>
+            <span class="material-symbols-outlined mt-2">{{ gallery.stars_7 }}</span>
+            <p>From: ${{ gallery.price_7 }}</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+        <a href="{{ gallery.page_link_8 }}">
+          <img src="{{ gallery.image_8.url }}" alt="">
+          <div class="portfolio-info">
+            <h4>{{ gallery.title_8 }}</h4>
+            <div>{{ gallery.location_8 }}</div>
+            <span class="material-symbols-outlined mt-2">{{ gallery.stars_8 }}</span>
+            <p>From: ${{ gallery.price_8 }}</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+        <a href="{{ gallery.page_link_9 }}">
+          <img src="{{ gallery.image_9.url }}" alt="">
+          <div class="portfolio-info">
+            <h4>{{ gallery.title_9 }}</h4>
+            <div>{{ gallery.location_9 }}</div>
+            <span class="material-symbols-outlined mt-2">{{ gallery.stars_9 }}</span>
+            <p>From: ${{ gallery.price_9 }}</p>
+          </div>
+        </a>
+      </div>
+
+
+      <!-- END LOOP -->
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+
+
+
+<!-- Isotope JS (filtering and layout engine) -->
+<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let grid = document.querySelector('.portfolio-container');
+    if (grid) {
+      let iso = new Isotope(grid, {
+        itemSelector: '.portfolio-item',
+        layoutMode: 'fitRows'
+      });
+
+      let filters = document.querySelectorAll('#portfolio-flters li');
+      filters.forEach(btn => {
+        btn.addEventListener('click', function () {
+          filters.forEach(el => el.classList.remove('filter-active'));
+          this.classList.add('filter-active');
+          let filterValue = this.getAttribute('data-filter');
+          iso.arrange({ filter: filterValue });
+        });
+      });
+    }
+  });
+</script>

@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+  .site-cover {
+    background-image: url('{{ city.hero.url }}');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
+  .site-cover.overlay:before {
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+
+  .tag-container {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag-box {
+    display: inline-block;
+    padding: 0.4rem 0.75rem;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .tag-box:hover {
+    background-color: #3fd0d4;
+    color: white;
+    border-color: #3fd0d4;
+  }
+</style>
+
+<div class="site-cover site-cover-sm same-height overlay single-page">
+  <div class="container">
+    <div class="row same-height justify-content-center">
+      <div class="col-md-6">
+        <div class="post-entry text-center">
+          <h1 class="mb-4" style="margin-top: 20%;">{{ city.name }}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
+
+{% include 'menu.html' %}
+
+<section class="section">
+  <div class="container">
+    <div class="row blog-entries element-animate">
+      <div class="col-md-12 col-lg-8 main-content">
+        <div class="post-content-body">
+          <h2>{{ city.header|safe }}</h2>
+          <p>{{ city.body|safe }}</p>
+
+          <h3>{{ city.subheader|safe }}</h3>
+          <p>{{ city.description|safe }}</p>
+
+          <hr style="margin-top: 50px;">
+
+          <div class="row my-4">
+            {% if city.image %}
+              <div class="col-md-6 mb-4"><img src="{{ city.image.url }}" class="img-fluid rounded"></div>
+            {% endif %}
+            {% if city.image2 %}
+              <div class="col-md-6 mb-4"><img src="{{ city.image2.url }}" class="img-fluid rounded"></div>
+            {% endif %}
+            {% if city.image3 %}
+              <div class="col-md-12 mb-4"><img src="{{ city.image3.url }}" class="img-fluid rounded"></div>
+            {% endif %}
+          </div>
+
+          <h3>{{ city.subheader_one|safe }}</h3>
+          <p>{{ city.description_one|safe }}</p>
+
+          <h3>{{ city.subheader_two|safe }}</h3>
+          <p>{{ city.description_two|safe }}</p>
+
+          <div class="row my-4">
+            {% if city.image4 %}
+              <div class="col-md-6 mb-4"><img src="{{ city.image4.url }}" class="img-fluid rounded"></div>
+            {% endif %}
+            {% if city.image5 %}
+              <div class="col-md-6 mb-4"><img src="{{ city.image5.url }}" class="img-fluid rounded"></div>
+            {% endif %}
+          </div>
+
+          <h3>{{ city.subheader_three|safe }}</h3>
+          <p>{{ city.description_three|safe }}</p>
+
+          <h3>Ready to Experience the Magic of {{ city.destination.country }}?</h3>
+          <p>Start planning your island adventure today and uncover the natural wonders, rich heritage, and warm hospitality that make {{ city.destination.country }} a top travel destination.</p>
+          <h4>Book your trip now and let the journey begin!</h4>
+        </div>
+      </div>
+
+      <!-- ✅ Sidebar (unchanged) -->
+      <div class="col-md-12 col-lg-4 sidebar">
+        <div class="sidebar-box">
+          <div class="bio text-center">
+            <img src="{% static 'assets/images/rachel-ann.jpg' %}" alt="Rachel Ann Deborja" class="img-fluid mb-3 rounded-circle">
+            <div class="bio-body">
+              <h2 class="h5">Rachel Ann Deborja</h2>
+              <p>At iwVoyage, our team is a passionate group of seasoned travelers and dedicated customer service professionals.</p>
+              <p><a href="{% url 'about:about_page' %}" class="btn btn-primary btn-sm rounded px-3 py-2">Read My Bio</a></p>
+              <p class="social">
+                <a href="#" class="p-2"><span class="fa fa-facebook"></span></a>
+                <a href="#" class="p-2"><span class="fa fa-twitter"></span></a>
+                <a href="#" class="p-2"><span class="fa fa-instagram"></span></a>
+                <a href="#" class="p-2"><span class="fa fa-youtube-play"></span></a>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-box">
+          <h3 class="heading">What's Trending</h3>
+          <div class="post-entry-sidebar">
+            <ul>
+              {% for trend in trends %}
+              <li>
+                <a href="{{ trend.link }}">
+                  <img src="{{ trend.image.url }}" class="me-4 rounded" alt="{{ trend.title }}">
+                  <div class="text">
+                    <h4>{{ trend.title|truncatechars:50 }}</h4>
+                    <div class="post-meta"><span class="mr-2">{{ trend.location }}</span></div>
+                  </div>
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+
+        <div class="sidebar-box">
+          <h3 class="heading">Categories</h3>
+          <ul class="categories">
+            {% for category in categories %}
+            <li><a href="{% url 'post:posts_by_category' category.slug %}">{{ category.name }} ({{ category.post_set.count }})</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="sidebar-box">
+          <h3 class="heading">Tags</h3>
+          <div class="tag-container">
+            {% for tag in tags %}
+            <a href="{% url 'post:posts_by_tag' tag.slug %}" class="tag-box">{{ tag.name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="sidebar-box">
+          <h3 class="heading">Sponsored</h3>
+          {% for banner in banners %}
+          <div class="mb-3 text-center">
+            <a href="{{ banner.link }}" target="_blank">
+              <img src="{{ banner.image.url }}" class="img-fluid mb-1" alt="{{ banner.title }}">
+              <p class="small text-muted" style="font-size: 18px; margin-top: 15px;">{{ banner.title }}</p>
+            </a>
+            <a href="{{ banner.link }}" class="btn btn-outline-head mt-2">Book Tour</a>
+          </div>
+          {% empty %}
+          <p>No ads available.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

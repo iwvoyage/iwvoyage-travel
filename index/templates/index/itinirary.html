@@ -1,0 +1,71 @@
+{% load static %}
+
+<!-- Start retro layout blog posts -->
+<section class="section bg-light">
+  <div class="container">
+    <div class="d-flex justify-content-center justify-content-md-center">
+      <h2 style="line-height: 1.8; margin-bottom: 40px;">Itineraries</h2>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col-sm-6"></div>
+      <div class="col-sm-6 text-sm-end">
+        <a href="category.html" class="read-more">View All</a>
+      </div>
+    </div>
+
+    <div class="row align-items-stretch retro-layout">
+
+      <!-- Itinerary 1 -->
+      <div class="col-md-4">
+        <a href="{{ itinerary_1_link }}" class="h-entry mb-30 v-height gradient" target="_blank">
+          <div class="featured-img" style="background-image: url('{{ itinerary_1_image.url }}');"></div>
+          <div class="text">
+            <span class="date">{{ itinerary_1_destination }}</span>
+            <h2>{{ itinerary_1_title }}</h2>
+          </div>
+        </a>
+
+        <a href="{{ itinerary_2_link }}" class="h-entry v-height gradient" target="_blank">
+          <div class="featured-img" style="background-image: url('{{ itinerary_2_image.url }}');"></div>
+          <div class="text">
+            <span class="date">{{ itinerary_2_destination }}</span>
+            <h2>{{ itinerary_2_title }}</h2>
+          </div>
+        </a>
+      </div>
+
+      <!-- Itinerary 3 -->
+      <div class="col-md-4">
+        <a href="{{ itinerary_3_link }}" class="h-entry img-5 h-100 gradient" target="_blank">
+          <div class="featured-img" style="background-image: url('{{ itinerary_3_image.url }}');"></div>
+          <div class="text">
+            <span class="date">{{ itinerary_3_destination }}</span>
+            <h2>{{ itinerary_3_title }}</h2>
+          </div>
+        </a>
+      </div>
+
+      <!-- Itinerary 4 & 5 -->
+      <div class="col-md-4">
+        <a href="{{ itinerary_4_link }}" class="h-entry mb-30 v-height gradient" target="_blank">
+          <div class="featured-img" style="background-image: url('{{ itinerary_4_image.url }}');"></div>
+          <div class="text">
+            <span class="date">{{ itinerary_4_destination }}</span>
+            <h2>{{ itinerary_4_title }}</h2>
+          </div>
+        </a>
+
+        <a href="{{ itinerary_5_link }}" class="h-entry v-height gradient" target="_blank">
+          <div class="featured-img" style="background-image: url('{{ itinerary_5_image.url }}');"></div>
+          <div class="text">
+            <span class="date">{{ itinerary_5_destination }}</span>
+            <h2>{{ itinerary_5_title }}</h2>
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- End retro layout blog posts -->

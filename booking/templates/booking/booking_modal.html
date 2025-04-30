@@ -1,0 +1,95 @@
+<!-- Booking Modal Trigger Button -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookingModal">
+    Book Now
+  </button>
+  
+  <!-- Booking Modal -->
+  <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+        <form id="bookingForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="bookingModalLabel">Book Your Adventure</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+  
+          <div class="modal-body">
+            <div id="form-messages" class="mb-3"></div>
+  
+            {% csrf_token %}
+  
+            <div class="mb-3">
+              <label for="id_name" class="form-label">Name</label>
+              <input type="text" name="name" class="form-control" id="id_name" required>
+            </div>
+  
+            <div class="mb-3">
+              <label for="id_email" class="form-label">Email</label>
+              <input type="email" name="email" class="form-control" id="id_email" required>
+            </div>
+  
+            <div class="mb-3">
+              <label for="id_phone" class="form-label">Phone</label>
+              <input type="text" name="phone" class="form-control" id="id_phone" required>
+            </div>
+  
+            <div class="mb-3">
+              <label for="id_traveldate" class="form-label">Travel Date</label>
+              <input type="date" name="traveldate" class="form-control" id="id_traveldate" required>
+            </div>
+  
+            <div class="mb-3">
+              <label for="id_destination" class="form-label">Destination</label>
+              <textarea name="destination" class="form-control" id="id_destination" rows="2"></textarea>
+            </div>
+  
+            <div class="mb-3">
+              <label for="id_message" class="form-label">Message</label>
+              <textarea name="message" class="form-control" id="id_message" rows="4"></textarea>
+            </div>
+          </div>
+  
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Send Booking</button>
+          </div>
+        </form>
+  
+      </div>
+    </div>
+  </div>
+  
+  <!-- AJAX Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const bookingForm = document.getElementById("bookingForm");
+      bookingForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+  
+        const formData = new FormData(bookingForm);
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+  
+        fetch("{% url 'booking:booking_form' %}", {
+          method: "POST",
+          headers: {
+            "X-CSRFToken": csrfToken
+          },
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          const msgBox = document.getElementById("form-messages");
+          if (data.success) {
+            msgBox.innerHTML = "<div class='alert alert-success'>Thank you! We'll get back to you shortly.</div>";
+            bookingForm.reset();
+          } else {
+            msgBox.innerHTML = "<div class='alert alert-danger'>Please fix the errors and try again.</div>";
+          }
+        })
+        .catch(error => {
+          console.error("Error:", error);
+        });
+      });
+    });
+  </script>
+  

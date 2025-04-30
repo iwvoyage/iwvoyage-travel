@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head_extra %}
+  <title>{{ post.title }} | iwVoyage</title>
+  
+  {% if post.meta_description %}
+    <meta name="description" content="{{ post.meta_description }}">
+  {% else %}
+    <meta name="description" content="{{ post.title }}">
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+
+<style>
+  .site-cover {
+    background-image: url('{{ post.image_hero.url }}');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
+  .site-cover.overlay:before {
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+
+  .tag-container {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag-box {
+    display: inline-block;
+    padding: 0.4rem 0.75rem;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .tag-box:hover {
+    background-color: #3fd0d4;
+    color: white;
+    border-color: #3fd0d4;
+  }
+
+  .fadeIn {
+    animation: fadeIn 1s ease-in-out both;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<div class="site-mobile-menu site-navbar-target">
+  <div class="site-mobile-menu-header">
+    <div class="site-mobile-menu-close">
+      <span class="icofont-close js-menu-toggle"></span>
+    </div>
+  </div>
+  <div class="site-mobile-menu-body"></div>
+</div>
+
+{% include 'menu.html' %}
+
+<div class="site-cover site-cover-sm same-height overlay single-page fadeIn">
+  <div class="container">
+    <div class="row same-height justify-content-center">
+      <div class="col-md-6">
+        <div class="post-entry text-center">
+          <h1 class="mb-4" style="margin-top: 20%;">{{ post.title|safe }}</h1>    
+        </div>
+      </div> 
+    </div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="row blog-entries element-animate">
+      <div class="row">
+
+        <!-- MAIN BODY CONTENT (LEFT) -->
+        <div class="col-md-12 col-lg-8 main-content">
+          <div class="post-content-body fadeIn">
+
+            <h2>{{ post.title }}</h2>
+            <div>{{ post.body|safe }}</div>
+            
+            {% for section in post.sections.all %}
+              <div class="my-3">
+
+                <h4>{{ section.subheader }}</h4>
+                <div>{{ section.paragraph|safe }}</div>
+
+                {% if section.image or section.image_2 %}
+                  <div class="row mt-3">
+                    {% if section.image %}
+                      <div class="col-md-6 mb-3 fadeIn">
+                        <img src="{{ section.image.url }}" alt="Image 1 for {{ section.subheader }}" class="img-fluid rounded">
+                      </div>
+                    {% endif %}
+                    {% if section.image_2 %}
+                      <div class="col-md-6 mb-3 fadeIn">
+                        <img src="{{ section.image_2.url }}" alt="Image 2 for {{ section.subheader }}" class="img-fluid rounded">
+                      </div>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+          {% include 'booking/booking_modal.html' %}
+        </div>
+
+        <!-- SIDEBAR (RIGHT) -->
+        <div class="col-md-12 col-lg-4 sidebar">
+          <!-- Bio Box -->
+          <div class="sidebar-box fadeIn">
+            <div class="bio text-center">
+              <img src="{% static 'images/rachel-ann.jpg' %}" alt="Image Placeholder" class="img-fluid mb-3">
+              <div class="bio-body">
+                <h2>Rachel Ann Deborja</h2>
+                <p class="mb-4">At iwVoyage, our team is a passionate group of seasoned travelers and dedicated customer service professionals.
+                  With years of firsthand experience exploring cities across the globe, we bring unparalleled knowledge 
+                  and enthusiasm to every journey we plan.</p>
+                <p><a href="about-us.html" class="btn btn-primary btn-sm rounded px-2 py-2">Read my bio</a></p>
+                <p class="social">
+                  <a href="#" class="p-2"><span class="fa fa-facebook"></span></a>
+                  <a href="#" class="p-2"><span class="fa fa-twitter"></span></a>
+                  <a href="#" class="p-2"><span class="fa fa-instagram"></span></a>
+                  <a href="#" class="p-2"><span class="fa fa-youtube-play"></span></a>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- What's Trending -->
+          <div class="sidebar-box fadeIn">
+            <h3 class="heading">What's Trending</h3>
+            <div class="post-entry-sidebar">
+              <ul>
+                {% for trend in trends %}
+                <li>
+                  <a href="{{ trend.link }}">
+                    <img src="{{ trend.image.url }}" class="me-4 rounded" alt="{{ trend.title }}">
+                    <div class="text">
+                      <h4>{{ trend.title|truncatechars:50 }}</h4>
+                      <div class="post-meta">
+                        <span class="mr-2">{{ trend.location }}</span>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+
+          <!-- Categories -->
+          <div class="sidebar-box fadeIn">
+            <h3 class="heading">Categories</h3>
+            <ul class="categories">
+              {% for category in post.categories.all %}
+                {% if category.slug %}
+                  <li>
+                    <a href="{% url 'post:posts_by_category' category.slug %}">
+                      {{ category.name }} ({{ category.post_set.count }})
+                    </a>
+                  </li>
+                {% else %}
+                  <li>{{ category.name }} ({{ category.post_set.count }})</li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+
+          <!-- Tags -->
+          <div class="sidebar-box fadeIn">
+            <h3 class="heading">Tags</h3>
+            <div class="tag-container">
+              {% for tag in post.tags.all %}
+                {% if tag.slug %}
+                  <a href="{% url 'post:posts_by_tag' tag.slug %}" class="tag-box">{{ tag.name }}</a>
+                {% else %}
+                  <span class="tag-box">{{ tag.name }}</span>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        </div> <!-- /.sidebar -->
+
+      </div><!-- /.row -->
+    </div><!-- /.row.blog-entries -->
+  </div><!-- /.container -->
+</section>
+
+{% endblock %}
