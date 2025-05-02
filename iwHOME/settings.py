@@ -6,8 +6,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security
 SECRET_KEY = 'django-insecure-uzm_4#%u4t4#38k9_$a(sx$oq4%64n1q-i1cr2l$=09_a996r4'
-DEBUG = True
-ALLOWED_HOSTS = []
+DEBUG = False
+ALLOWED_HOSTS = ['iwvoyage.pythonanywhere.com']
 
 # Installed Applications
 INSTALLED_APPS = [
