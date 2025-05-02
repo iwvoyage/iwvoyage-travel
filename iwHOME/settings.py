@@ -9,7 +9,6 @@ SECRET_KEY = 'django-insecure-uzm_4#%u4t4#38k9_$a(sx$oq4%64n1q-i1cr2l$=09_a996r4
 DEBUG = False
 ALLOWED_HOSTS = ['iwvoyage-travel.onrender.com', '127.0.0.1', 'localhost']
 
-
 # Installed Applications
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -18,6 +17,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     # Custom Apps
     'post',
     'destinations',
@@ -25,7 +25,7 @@ INSTALLED_APPS = [
     'service',
     'about',
     'contact',
-    'cities',  # ✅ Correctly added as a standalone app
+    'cities',
     'django_ckeditor_5',
     'django_extensions',
     'process',
@@ -36,13 +36,12 @@ INSTALLED_APPS = [
     'deals',
     'mediahub',
     'django.contrib.sitemaps',
-
-
 ]
 
 # Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ Added to serve static files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -101,6 +100,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# ✅ WhiteNoise static file serving for production
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -182,8 +184,7 @@ CKEDITOR_5_CONFIGS = {
 # Default Auto Field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-
+# Email Settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'in-v3.mailjet.com'
 EMAIL_PORT = 587
@@ -191,8 +192,3 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = '74c00299648e40e62daa1e47ab7ec63a'
 EMAIL_HOST_PASSWORD = '30e6d734f23957870683f79057c81b57'
 DEFAULT_FROM_EMAIL = 'luis@iwvoyage.com'
-
-
-
-
-
