@@ -9,7 +9,7 @@ SECRET_KEY = 'django-insecure-uzm_4#%u4t4#38k9_$a(sx$oq4%64n1q-i1cr2l$=09_a996r4
 DEBUG = False
 ALLOWED_HOSTS = ['iwvoyage-travel.onrender.com', '127.0.0.1', 'localhost']
 
-# Installed Applications
+# Installed Applications 
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
