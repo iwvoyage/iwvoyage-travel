@@ -1,1 +1,1 @@
-web: gunicorn iwHOME.wsgi
+web: gunicorn iwHOME.wsgi:application
