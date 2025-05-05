@@ -1,5 +1,12 @@
+import os
+
 from django.shortcuts import render
+from django.http import HttpResponse
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 from .models import CarouselItem, ItinerarySection, GalleryGrid, Banner, Trend
+import uuid
+from storages.backends.s3boto3 import S3Boto3Storage
 
 def home(request):
     carousel_items = CarouselItem.objects.all()
@@ -53,3 +60,31 @@ def gallery_view(request):
     return render(request, 'index/gallery.html', {
         'gallery': gallery
     })
+
+
+
+
+from storages.backends.s3boto3 import S3Boto3Storage
+
+class PublicMediaStorage(S3Boto3Storage):
+    location = 'media'
+    default_acl = 'public-read'
+    file_overwrite = False
+
+def test_s3_upload(request):
+    context = {}
+
+    if request.method == 'POST' and request.FILES.get('file'):
+        uploaded_file = request.FILES['file']
+        file_name = uploaded_file.name
+        unique_suffix = uuid.uuid4().hex[:7]
+        new_name = f"{os.path.splitext(file_name)[0]}_{unique_suffix}{os.path.splitext(file_name)[1]}"
+
+        storage = PublicMediaStorage()
+        saved_path = storage.save(new_name, uploaded_file)
+        file_url = storage.url(saved_path)
+
+        print("✅ FILE URL:", file_url)
+        context['file_url'] = file_url
+
+    return render(request, 'index/test_upload.html', context)

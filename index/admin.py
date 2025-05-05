@@ -12,7 +12,28 @@ from .models import (
 # Carousel Admin
 @admin.register(CarouselItem)
 class CarouselItemAdmin(admin.ModelAdmin):
-    list_display = ['title', 'image', 'mobile_image']
+    list_display = ['order', 'title', 'is_active', 'text_alignment', 'image_preview']
+    list_editable = ['is_active', 'text_alignment']
+    list_filter = ['is_active', 'text_alignment']
+    ordering = ['order']
+
+    fieldsets = (
+        ('Desktop Version', {
+            'fields': ('title', 'subtitle', 'image', 'button_text', 'button_link', 'text_alignment')
+        }),
+        ('Mobile Version', {
+            'fields': ('mobile_title', 'mobile_subtitle', 'mobile_image', 'mobile_button_text', 'mobile_button_link')
+        }),
+        ('Other Settings', {
+            'fields': ('order', 'is_active')
+        }),
+    )
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" style="height: 50px;">', obj.image.url)
+        return "-"
+    image_preview.short_description = 'Preview'
 
 
 # Itinerary Admin

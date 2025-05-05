@@ -1,117 +1,138 @@
 {% load static %}
 
 <style>
-.slider-section {
-    width: 100vw;
-    height: 60vh;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
-}
-
-.carousel {
-    width: 100%;
-    height: 100%;
-}
-
-.carousel-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-
-.carousel-item {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 2.5s linear;
-    z-index: 0;
-}
-
-.carousel-item.active {
-    opacity: 1;
-    z-index: 1;
-}
-
-.carousel-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.carousel-caption {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 900px;
-    width: 90%;
-    padding: 0 1rem;
-    padding-bottom: 3rem;
-    pointer-events: auto;
-}
-
-@media (max-width: 768px) {
-    .carousel-caption {
-        text-align: center !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) !important;
+    .slider-section {
+        width: 100vw;
+        height: 60vh;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
     }
+    
+    .carousel {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .carousel-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .carousel-item {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        opacity: 0;
+        transition: opacity 2.5s linear;
+        z-index: 0;
+    }
+    
+    .carousel-item.active {
+        opacity: 1;
+        z-index: 1;
+    }
+    
+    .carousel-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+    
+    /* ── Caption Base: vertical stack, centered vertically ────────────────────── */
+    .carousel-caption {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        display: flex !important;
+        flex-direction: column;      /* stack title/subtitle/button */
+        justify-content: center;     /* vertical centering */
+        z-index: 5 !important;
+        color: white !important;
+        padding: 0 1rem;
+    }
+    
+    /* ── Alignment Variants: horizontal placement ─────────────────────────────── */
+.carousel-caption.left {
+    align-items: flex-start;
+    padding-left: 20%;    /* more space from the left edge! */
+    text-align: left;
 }
-</style>
 
+.carousel-caption.center {
+    align-items: center;
+    /* center needs no extra horizontal padding */
+    text-align: center;
+}
+
+.carousel-caption.right {
+    align-items: flex-end;
+    padding-right: 20%;   /* more space from the right edge! */
+    text-align: right;
+}
+
+    
+    /* ── Mobile fallback: keep stack, center everything ─────────────────────── */
+    @media (max-width: 768px) {
+        .carousel-caption {
+            align-items: center !important;
+            padding: 1rem !important;
+            text-align: center !important;
+        }
+    }
+    </style>
+    
+<!-- ── Slider Script ──────────────────────────────────────────────────────────── -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    const carouselElement = document.querySelector('#carouselExampleAutoplaying');
-    const items = carouselElement.querySelectorAll('.carousel-item');
-    let currentIndex = 0;
-    const transitionTime = 10000; // 10 seconds
+    const carousel = document.querySelector('#carouselExampleAutoplaying');
+    const slides   = carousel.querySelectorAll('.carousel-item');
+    let idx = 0;
+    const delay = 10000; // 10s
 
-    function showNextSlide() {
-        items[currentIndex].classList.remove('active');
-        currentIndex = (currentIndex + 1) % items.length;
-        items[currentIndex].classList.add('active');
+    function next() {
+        slides[idx].classList.remove('active');
+        idx = (idx + 1) % slides.length;
+        slides[idx].classList.add('active');
     }
 
-    setInterval(showNextSlide, transitionTime);
+    setInterval(next, delay);
 });
 </script>
 
+<!-- ── Slider Markup ──────────────────────────────────────────────────────────── -->
 <section id="slider-section" class="slider-section">
-    <div id="carouselExampleAutoplaying" class="carousel">
-
-        <div class="carousel-inner">
-            {% for item in carousel_items %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <picture>
-                    {% if item.mobile_image %}
-                        <source srcset="{{ item.mobile_image.url }}" media="(max-width: 768px)">
-                    {% endif %}
-                    <img src="{{ item.image.url }}" class="d-block w-100 img-fluid" alt="{{ item.title }}">
-                </picture>
-
-                {% if item.text_alignment == 'left' %}
-                    <div class="carousel-caption text-start">
-                {% elif item.text_alignment == 'right' %}
-                    <div class="carousel-caption text-end">
-                {% else %}
-                    <div class="carousel-caption text-center">
-                {% endif %}
-                        <h1 class="display-1 fw-bolder text-capitalize mb-4" style="color:white;">
-                            {{ item.title|safe }}
-                        </h1>
-                        {% if item.subtitle %}
-                            <p class="fs-3 spaced-paragraph mb-4">{{ item.subtitle|safe }}</p>
-                        {% endif %}
-                    </div>
-            </div>
-            {% endfor %}
+  <div id="carouselExampleAutoplaying" class="carousel">
+    <div class="carousel-inner">
+      {% for item in carousel_items %}
+      <div class="carousel-item {% if forloop.first %}active{% endif %}">
+        <img src="{{ item.image.url }}"
+             class="d-block w-100 img-fluid"
+             alt="{{ item.title|default:'Slide image' }}">
+        
+        <div class="carousel-caption {{ item.text_alignment }}">
+          {% if item.title %}
+          <h1 class="display-1 fw-bolder text-capitalize mb-4">
+            {{ item.title|safe }}
+          </h1>
+          {% endif %}
+          
+          {% if item.subtitle %}
+          <p class="fs-3 spaced-paragraph mb-4">
+            {{ item.subtitle|safe }}
+          </p>
+          {% endif %}
+          
+          {% if item.button_text and item.button_link %}
+          
+          <p><a href="{{ item.button_link }}" class="btn btn-sm btn-outline-primary">Book Now</a></p>
+          {% endif %}
         </div>
+      </div>
+      {% endfor %}
     </div>
+  </div>
 </section>

@@ -31,10 +31,9 @@ urlpatterns = [
     path('partners/', include('partners.urls')),
     path('qna/', include('qna.urls', namespace='qna')),
     path('ads/', include('adbanner.urls', namespace='adbanner')),
-    path('booking/', include('booking.urls', namespace='booking')),
     path('deals/', include('deals.urls', namespace='deals')),
     path('mediahub/', include('mediahub.urls', namespace='mediahub')),
-
+    path('booking/', include('booking.urls', namespace='booking')),
     # SEO + Sitemap
     path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
@@ -50,3 +49,6 @@ urlpatterns = [
 # Serve media in development
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

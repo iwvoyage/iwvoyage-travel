@@ -1,0 +1,26 @@
+<!-- TEST TEMPLATE LOADED -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload to S3</title>
+</head>
+<body><!-- TEST TEMPLATE LOADED -->
+
+    <h1>22Upload File to S3</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="file" required>
+        <button type="submit">Upload</button>
+    </form>
+
+    {% if file_url %}
+        <p><strong>Uploaded successfully!</strong></p>
+        <p><a href="{{ file_url }}" target="_blank">{{ file_url }}</a></p>
+        <img src="{{ file_url }}" alt="Uploaded Image" style="max-width: 300px;">
+    {% else %}
+        <p>No file uploaded yet.</p>
+    {% endif %}
+</body>
+</html>
