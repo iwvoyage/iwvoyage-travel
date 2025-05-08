@@ -1,0 +1,25 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django database files
+*.sqlite3
+db*.sqlite3
+
+# Virtual environments
+venv/
+iwvenv/
+.env
+
+# macOS
+.DS_Store
+
+# Django static and media
+/media/
+/staticfiles/
+/staticfiles_temp/
+*.log
+
+# VS Code
+.vscode/
